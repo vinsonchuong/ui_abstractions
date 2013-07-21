@@ -1,0 +1,13 @@
+<h1>Todo List</h1>
+<form class="task_input">
+  <input class="title" type="text" name="title" />
+  <input class="add" type="submit" value="Add Task" />
+</form>
+<ul class="tasks">
+  {{#tasks}}
+    <li class="task" data-cid="{{cid}}">
+      <span class="title">{{title}}</span>
+      <a class="delete" href="#">Delete</a>
+    </li>
+  {{/tasks}}
+</ul>

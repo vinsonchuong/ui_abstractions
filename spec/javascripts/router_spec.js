@@ -25,7 +25,7 @@ describe('UiAbstractions.Router', function() {
     });
 
     it('creates the example', function() {
-      expect(UiAbstractions.Examples.Example.Implementation).toHaveBeenCalled();
+      expect(UiAbstractions.Examples.Example.Implementation).toHaveBeenCalledWith({el: $('body')});
     });
   });
 });

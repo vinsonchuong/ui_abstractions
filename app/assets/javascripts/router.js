@@ -17,7 +17,7 @@
     });
 
     function showImplementation(name, implementation) {
-      new UiAbstractions.Examples[name][implementation]();
+      new UiAbstractions.Examples[name][implementation]({el: $('body')});
     }
 
     return self;
