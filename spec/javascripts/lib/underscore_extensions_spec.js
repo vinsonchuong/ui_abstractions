@@ -1,6 +1,16 @@
 //= require spec_helper
 //= require underscore_extensions
 describe('underscore_extensions', function() {
+  describe('_.flip', function() {
+    it('reverses the arguments of a function', function() {
+      function fn(a, b, c) {
+        return [a, b, c];
+      }
+      expect(fn(1, 2, 3)).toEqual([1, 2, 3]);
+      expect(_.flip(fn)(1, 2, 3)).toEqual([3, 2, 1]);
+    });
+  });
+
   describe('_.lookup', function() {
     it('converts an array of strings into a lookup map', function() {
       expect(_.lookup(['a', 'b', 'c'])).toEqual({a: true, b: true, c: true});
@@ -68,7 +78,7 @@ describe('underscore_extensions', function() {
   describe('_.nestedEach', function() {
     it('is the same as nested calls to _.each', function() {
       var result = [];
-      _.nestedEach(['a', 'b'], ['x', 'y'], function(x, i, y, j) {
+      _.nestedEach(['a', 'b'], ['x', 'y'], function(x, i, xs, y, j, ys) {
         result.push([x, i, y, j]);
       })
       expect(result).toEqual([

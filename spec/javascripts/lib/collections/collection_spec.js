@@ -52,4 +52,37 @@ describe('Collection', function() {
       expect(collection[method]).toEqual(jasmine.any(Function));
     });
   });
+
+  describe('when constructed with arbitrary JSON', function() {
+    beforeEach(function() {
+      collection = new Collection([{foo: 1}, {foo: 2}, [3]]);
+    });
+
+    it('wraps objects and arrays', function() {
+      expect(collection[0]).toEqual(jasmine.any(Model));
+      expect(collection[1]).toEqual(jasmine.any(Model));
+      expect(collection[2]).toEqual(jasmine.any(Collection));
+    });
+  });
+
+  describe('#notify', function() {
+    beforeEach(function() {
+      collection = new Collection(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+    });
+
+    describe('when the collection is mutated', function() {
+      beforeEach(function() {
+        spyOn(collection, 'notify');
+        collection.splice(0, collection.length, 'i', 'f', 'a', 'b', 'g', 'd', 'e', 'h');
+      });
+
+      it('should be called with a list of changes', function() {
+        expect(collection.notify).toHaveBeenCalledWith({
+          removed: [{value: 'c', from: 2}],
+          added: [{value: 'i', to: 0}, {value: 'h', to: 7}],
+          moved: [{value: 'f', from: 5, to: 1}, {value: 'g', from: 6, to: 4}]
+        });
+      });
+    });
+  });
 });
